@@ -21,65 +21,62 @@ export default function Calendar({ shifts, onDateClick, selectedDate }: Calendar
     return shifts.find((shift) => isSameDay(new Date(shift.date), date));
   };
 
-  const getShiftColor = (shiftType: string): string => {
+  const getShiftStyle = (shiftType: string): string => {
     switch (shiftType) {
       case 'morning':
-        return 'bg-gradient-to-br from-yellow-400 to-yellow-500 text-yellow-900 font-semibold shadow-md';
+        return 'bg-[#fff4e6] dark:bg-[#3d2e1f] text-[#8b6914] dark:text-[#f2d675] border-[#f2d675] dark:border-[#8b6914]';
       case 'afternoon':
-        return 'bg-gradient-to-br from-orange-400 to-orange-500 text-orange-900 font-semibold shadow-md';
+        return 'bg-[#ffe5e5] dark:bg-[#3d1f1f] text-[#b85450] dark:text-[#ff9999] border-[#ff9999] dark:border-[#b85450]';
       case 'night':
-        return 'bg-gradient-to-br from-indigo-500 to-indigo-600 text-white font-semibold shadow-md';
+        return 'bg-[#e1f5ff] dark:bg-[#1f2e3d] text-[#0b6e99] dark:text-[#6cc4e8] border-[#6cc4e8] dark:border-[#0b6e99]';
       default:
-        return 'bg-gray-200';
+        return '';
     }
   };
 
   const previousMonth = () => setCurrentMonth(subMonths(currentMonth, 1));
   const nextMonth = () => setCurrentMonth(addMonths(currentMonth, 1));
 
-  // Get first day of week offset
   const firstDayOfWeek = getDay(monthStart);
-  const offsetDays = firstDayOfWeek === 0 ? 6 : firstDayOfWeek - 1; // Monday = 0
+  const offsetDays = firstDayOfWeek === 0 ? 6 : firstDayOfWeek - 1;
 
   return (
-    <div className="glass rounded-2xl shadow-xl p-4 sm:p-6 border border-white/20 dark:border-gray-700/50">
+    <div className="notion-card p-4 sm:p-6">
       <div className="flex items-center justify-between mb-6">
         <button
           onClick={previousMonth}
-          className="p-2.5 hover:bg-gray-100 dark:hover:bg-gray-700/50 rounded-xl transition-all duration-200 hover:scale-110 active:scale-95"
+          className="notion-button p-2 rounded-lg transition-all duration-150"
           aria-label="Previous month"
         >
-          <svg className="w-5 h-5 text-gray-700 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
         </button>
-        <h2 className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white">
+        <h2 className="text-xl sm:text-2xl font-bold text-[#37352f] dark:text-[#e9e9e7]">
           {format(currentMonth, 'MMMM yyyy')}
         </h2>
         <button
           onClick={nextMonth}
-          className="p-2.5 hover:bg-gray-100 dark:hover:bg-gray-700/50 rounded-xl transition-all duration-200 hover:scale-110 active:scale-95"
+          className="notion-button p-2 rounded-lg transition-all duration-150"
           aria-label="Next month"
         >
-          <svg className="w-5 h-5 text-gray-700 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
           </svg>
         </button>
       </div>
 
       <div className="grid grid-cols-7 gap-1 sm:gap-2">
         {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((day) => (
-          <div key={day} className="text-center text-xs sm:text-sm font-bold text-gray-600 dark:text-gray-400 py-2 sm:py-3">
+          <div key={day} className="text-center text-xs sm:text-sm font-semibold text-[#787774] dark:text-[#9b9a97] py-2 sm:py-3">
             {day}
           </div>
         ))}
 
-        {/* Offset days */}
         {Array.from({ length: offsetDays }).map((_, i) => (
           <div key={`offset-${i}`} className="h-12 sm:h-16" />
         ))}
 
-        {/* Calendar days */}
         {daysInMonth.map((day) => {
           const shift = getShiftForDate(day);
           const isSelected = selectedDate && isSameDay(day, selectedDate);
@@ -90,14 +87,14 @@ export default function Calendar({ shifts, onDateClick, selectedDate }: Calendar
               key={day.toISOString()}
               onClick={() => onDateClick(day)}
               className={`
-                h-12 sm:h-16 p-1 sm:p-1.5 rounded-lg border-2 transition-all duration-200
-                ${isSelected ? 'border-blue-500 ring-4 ring-blue-200/50 dark:ring-blue-500/30 scale-105' : 'border-transparent'}
-                ${isToday && !shift ? 'bg-blue-50 dark:bg-blue-900/20 border-blue-300 dark:border-blue-700' : ''}
-                ${shift ? getShiftColor(shift.shiftType) + ' hover:scale-105' : 'hover:bg-gray-50 dark:hover:bg-gray-700/50 text-gray-700 dark:text-gray-300'}
-                ${!shift && !isToday ? 'hover:border-gray-300 dark:hover:border-gray-600' : ''}
+                h-12 sm:h-16 p-1 sm:p-1.5 rounded-lg border-2 transition-all duration-150 text-left
+                ${isSelected ? 'border-[#37352f] dark:border-[#e9e9e7] ring-2 ring-[#37352f]/20 dark:ring-[#e9e9e7]/20' : 'border-transparent'}
+                ${isToday && !shift ? 'bg-[#f7f6f3] dark:bg-[#2a2a2a] border-[#e9e9e7] dark:border-[#2e2e2e]' : ''}
+                ${shift ? getShiftStyle(shift.shiftType) + ' border-2 font-semibold' : 'notion-hover text-[#37352f] dark:text-[#e9e9e7]'}
+                ${!shift && !isToday ? 'hover:border-[#e9e9e7] dark:hover:border-[#2e2e2e]' : ''}
               `}
             >
-              <div className={`text-xs sm:text-sm font-semibold ${shift ? '' : 'text-gray-800 dark:text-gray-200'}`}>
+              <div className={`text-xs sm:text-sm font-semibold ${shift ? '' : 'text-[#37352f] dark:text-[#e9e9e7]'}`}>
                 {format(day, 'd')}
               </div>
               {shift && (

@@ -92,26 +92,47 @@ export default function ShiftForm({ shift, selectedDate, onSave, onCancel }: Shi
   const times = getShiftTimes(shiftType);
 
   const shiftTypeOptions = [
-    { value: 'morning', label: 'Morning', time: '6:30 AM - 2:30 PM', color: 'from-yellow-400 to-yellow-500' },
-    { value: 'afternoon', label: 'Afternoon', time: '2:30 PM - 10:30 PM', color: 'from-orange-400 to-orange-500' },
-    { value: 'night', label: 'Night', time: '10:30 PM - 6:30 AM', color: 'from-indigo-500 to-indigo-600' },
+    { 
+      value: 'morning', 
+      label: 'Morning', 
+      time: '6:30 AM - 2:30 PM', 
+      bg: 'bg-[#fff4e6] dark:bg-[#3d2e1f]',
+      border: 'border-[#f2d675] dark:border-[#8b6914]',
+      text: 'text-[#8b6914] dark:text-[#f2d675]',
+    },
+    { 
+      value: 'afternoon', 
+      label: 'Afternoon', 
+      time: '2:30 PM - 10:30 PM', 
+      bg: 'bg-[#ffe5e5] dark:bg-[#3d1f1f]',
+      border: 'border-[#ff9999] dark:border-[#b85450]',
+      text: 'text-[#b85450] dark:text-[#ff9999]',
+    },
+    { 
+      value: 'night', 
+      label: 'Night', 
+      time: '10:30 PM - 6:30 AM', 
+      bg: 'bg-[#e1f5ff] dark:bg-[#1f2e3d]',
+      border: 'border-[#6cc4e8] dark:border-[#0b6e99]',
+      text: 'text-[#0b6e99] dark:text-[#6cc4e8]',
+    },
   ];
 
   return (
-    <form onSubmit={handleSubmit} className="glass rounded-2xl shadow-xl p-5 sm:p-6 space-y-5 border border-white/20 dark:border-gray-700/50">
+    <form onSubmit={handleSubmit} className="notion-card p-5 sm:p-6 space-y-5">
       <div className="flex items-center gap-3 mb-6">
-        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center">
-          <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className="w-10 h-10 rounded-lg bg-[#37352f] dark:bg-[#e9e9e7] flex items-center justify-center">
+          <svg className="w-5 h-5 text-white dark:text-[#191919]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6H6m6 0h6" />
           </svg>
         </div>
-        <h3 className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white">
+        <h3 className="text-xl sm:text-2xl font-bold text-[#37352f] dark:text-[#e9e9e7]">
           {shift ? 'Edit Shift' : 'Add New Shift'}
         </h3>
       </div>
 
       <div className="space-y-2">
-        <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300">
+        <label className="block text-sm font-semibold text-[#37352f] dark:text-[#e9e9e7]">
           Date
         </label>
         <input
@@ -119,12 +140,12 @@ export default function ShiftForm({ shift, selectedDate, onSave, onCancel }: Shi
           value={date}
           onChange={(e) => setDate(e.target.value)}
           required
-          className="w-full px-4 py-3 bg-white/50 dark:bg-gray-800/50 border-2 border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:text-white transition-all duration-200 font-medium"
+          className="notion-input w-full px-4 py-3 rounded-lg focus:ring-2 focus:ring-[#37352f] dark:focus:ring-[#e9e9e7] focus:ring-offset-0 font-medium"
         />
       </div>
 
       <div className="space-y-3">
-        <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300">
+        <label className="block text-sm font-semibold text-[#37352f] dark:text-[#e9e9e7]">
           Shift Type
         </label>
         <div className="grid grid-cols-1 gap-2">
@@ -134,22 +155,22 @@ export default function ShiftForm({ shift, selectedDate, onSave, onCancel }: Shi
               type="button"
               onClick={() => setShiftType(option.value as ShiftType)}
               className={`
-                relative p-4 rounded-xl border-2 transition-all duration-200 text-left
+                relative p-4 rounded-lg border-2 transition-all duration-150 text-left
                 ${shiftType === option.value
-                  ? `bg-gradient-to-r ${option.color} text-white border-transparent shadow-lg scale-[1.02]`
-                  : 'bg-white/50 dark:bg-gray-800/50 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600'
+                  ? `${option.bg} ${option.border} ${option.text} border-2 shadow-sm`
+                  : 'notion-card notion-hover border-[#e9e9e7] dark:border-[#2e2e2e] text-[#37352f] dark:text-[#e9e9e7]'
                 }
               `}
             >
               <div className="flex items-center justify-between">
                 <div>
                   <div className="font-bold text-sm sm:text-base">{option.label}</div>
-                  <div className={`text-xs mt-1 ${shiftType === option.value ? 'text-white/90' : 'text-gray-500 dark:text-gray-400'}`}>
+                  <div className={`text-xs mt-1 ${shiftType === option.value ? option.text : 'text-[#787774] dark:text-[#9b9a97]'}`}>
                     {option.time}
                   </div>
                 </div>
                 {shiftType === option.value && (
-                  <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
                 )}
@@ -159,20 +180,20 @@ export default function ShiftForm({ shift, selectedDate, onSave, onCancel }: Shi
         </div>
       </div>
 
-      <div className="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-700 rounded-xl p-4 border border-gray-200 dark:border-gray-600">
-        <div className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Shift Details</div>
+      <div className="notion-badge rounded-lg p-4">
+        <div className="text-sm font-semibold text-[#37352f] dark:text-[#e9e9e7] mb-2">Shift Details</div>
         <div className="grid grid-cols-3 gap-3 text-xs sm:text-sm">
           <div>
-            <div className="text-gray-500 dark:text-gray-400">Start</div>
-            <div className="font-bold text-gray-800 dark:text-white">{times.startTime}</div>
+            <div className="text-[#787774] dark:text-[#9b9a97]">Start</div>
+            <div className="font-bold text-[#37352f] dark:text-[#e9e9e7]">{times.startTime}</div>
           </div>
           <div>
-            <div className="text-gray-500 dark:text-gray-400">End</div>
-            <div className="font-bold text-gray-800 dark:text-white">{times.endTime}</div>
+            <div className="text-[#787774] dark:text-[#9b9a97]">End</div>
+            <div className="font-bold text-[#37352f] dark:text-[#e9e9e7]">{times.endTime}</div>
           </div>
           <div>
-            <div className="text-gray-500 dark:text-gray-400">Hours</div>
-            <div className="font-bold text-gray-800 dark:text-white">{times.hours}h</div>
+            <div className="text-[#787774] dark:text-[#9b9a97]">Hours</div>
+            <div className="font-bold text-[#37352f] dark:text-[#e9e9e7]">{times.hours}h</div>
           </div>
         </div>
       </div>
@@ -181,26 +202,16 @@ export default function ShiftForm({ shift, selectedDate, onSave, onCancel }: Shi
         <button
           type="submit"
           disabled={loading}
-          className="flex-1 py-3 px-6 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white font-bold rounded-xl hover:shadow-lg hover:shadow-purple-500/50 focus:outline-none focus:ring-4 focus:ring-purple-500/50 disabled:opacity-50 transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98]"
+          className="notion-button-primary flex-1 py-3 px-6 rounded-lg font-semibold disabled:opacity-50 transition-all duration-150"
         >
-          {loading ? (
-            <span className="flex items-center justify-center gap-2">
-              <svg className="animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-              </svg>
-              Saving...
-            </span>
-          ) : (
-            shift ? 'Update Shift' : 'Add Shift'
-          )}
+          {loading ? 'Saving...' : shift ? 'Update Shift' : 'Add Shift'}
         </button>
         {shift && (
           <button
             type="button"
             onClick={handleDelete}
             disabled={loading}
-            className="py-3 px-6 bg-red-500 hover:bg-red-600 text-white font-bold rounded-xl focus:outline-none focus:ring-4 focus:ring-red-500/50 disabled:opacity-50 transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98]"
+            className="py-3 px-6 bg-[#b85450] hover:bg-[#a8423e] text-white font-semibold rounded-lg focus:outline-none focus:ring-2 focus:ring-[#b85450]/50 disabled:opacity-50 transition-all duration-150"
           >
             Delete
           </button>
@@ -209,7 +220,7 @@ export default function ShiftForm({ shift, selectedDate, onSave, onCancel }: Shi
           type="button"
           onClick={onCancel}
           disabled={loading}
-          className="py-3 px-6 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-white font-bold rounded-xl focus:outline-none focus:ring-4 focus:ring-gray-500/50 disabled:opacity-50 transition-all duration-200"
+          className="notion-button py-3 px-6 rounded-lg font-semibold disabled:opacity-50 transition-all duration-150"
         >
           Cancel
         </button>
