@@ -71,14 +71,14 @@ export default function PayCalculator({ shifts }: PayCalculatorProps) {
 
       <div className="space-y-4 sm:space-y-6">
         {/* Gross Pay */}
-        <div className="notion-card p-6 sm:p-8 bg-[#37352f] dark:bg-[#e9e9e7]">
+        <div className="p-6 sm:p-8 rounded-lg border border-[#e9e9e7] dark:border-[#2e2e2e] bg-[#37352f] dark:bg-[#e9e9e7] transition-colors duration-200">
           <div className="flex items-center justify-between mb-2">
-            <div className="text-sm sm:text-base text-white/80 dark:text-[#191919]/80 font-medium">Gross Pay</div>
-            <svg className="w-6 h-6 text-white/80 dark:text-[#191919]/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="text-sm sm:text-base text-white dark:text-[#191919] font-medium opacity-90">Gross Pay</div>
+            <svg className="w-6 h-6 text-white dark:text-[#191919] opacity-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
-          <div className="text-3xl sm:text-5xl font-extrabold text-white dark:text-[#191919]">${calculation.grossPay.toFixed(2)}</div>
+          <div className="text-3xl sm:text-5xl font-extrabold text-white dark:text-[#191919] transition-colors duration-200">${calculation.grossPay.toFixed(2)}</div>
         </div>
 
         {/* Hours Breakdown */}
@@ -140,14 +140,14 @@ export default function PayCalculator({ shifts }: PayCalculatorProps) {
         </div>
 
         {/* Take Home Pay */}
-        <div className="notion-card p-6 sm:p-8 bg-[#37352f] dark:bg-[#e9e9e7]">
+        <div className="p-6 sm:p-8 rounded-lg border border-[#e9e9e7] dark:border-[#2e2e2e] bg-[#37352f] dark:bg-[#e9e9e7] transition-colors duration-200">
           <div className="flex items-center justify-between mb-2">
-            <div className="text-sm sm:text-base text-white/80 dark:text-[#191919]/80 font-medium">Take Home Pay</div>
-            <svg className="w-6 h-6 text-white/80 dark:text-[#191919]/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="text-sm sm:text-base text-white dark:text-[#191919] font-medium opacity-90">Take Home Pay</div>
+            <svg className="w-6 h-6 text-white dark:text-[#191919] opacity-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
-          <div className="text-3xl sm:text-5xl font-extrabold text-white dark:text-[#191919]">${calculation.takeHomePay.toFixed(2)}</div>
+          <div className="text-3xl sm:text-5xl font-extrabold text-white dark:text-[#191919] transition-colors duration-200">${calculation.takeHomePay.toFixed(2)}</div>
         </div>
       </div>
     </div>
