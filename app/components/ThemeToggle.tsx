@@ -3,14 +3,22 @@
 import { useState, useEffect } from 'react';
 
 export default function ThemeToggle() {
+  const [mounted, setMounted] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     // Check initial theme
-    const isDark = document.documentElement.classList.contains('dark') ||
-      (!document.documentElement.classList.contains('dark') && 
-       window.matchMedia('(prefers-color-scheme: dark)').matches);
+    const theme = localStorage.getItem('theme');
+    const isDark = theme === 'dark' || 
+      (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    
     setDarkMode(isDark);
+    if (isDark) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
   }, []);
 
   const toggleTheme = () => {
@@ -26,10 +34,16 @@ export default function ThemeToggle() {
     }
   };
 
+  if (!mounted) {
+    return (
+      <div className="notion-button p-2.5 rounded-lg w-10 h-10"></div>
+    );
+  }
+
   return (
     <button
       onClick={toggleTheme}
-      className="notion-button p-2.5 rounded-lg flex items-center justify-center"
+      className="notion-button p-2.5 rounded-lg flex items-center justify-center transition-all duration-150"
       aria-label="Toggle theme"
     >
       {darkMode ? (
@@ -44,4 +58,3 @@ export default function ThemeToggle() {
     </button>
   );
 }
-

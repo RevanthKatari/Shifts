@@ -98,22 +98,19 @@ export default function AnalyticsDashboard({ analytics }: AnalyticsDashboardProp
           </h3>
           <ResponsiveContainer width="100%" height={200}>
             <BarChart data={analytics.hoursByWeek}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e9e9e7" dark:stroke="#2e2e2e" opacity={0.3} />
-              <XAxis dataKey="week" stroke="#787774" dark:stroke="#9b9a97" fontSize={12} />
-              <YAxis stroke="#787774" dark:stroke="#9b9a97" fontSize={12} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#e9e9e7" className="dark:stroke-[#2e2e2e]" opacity={0.3} />
+              <XAxis dataKey="week" stroke="#787774" className="dark:stroke-[#9b9a97]" fontSize={12} />
+              <YAxis stroke="#787774" className="dark:stroke-[#9b9a97]" fontSize={12} />
               <Tooltip 
                 contentStyle={{ 
-                  backgroundColor: '#ffffff',
-                  dark: { backgroundColor: '#1e1e1e' },
-                  border: '1px solid #e9e9e7',
-                  dark: { border: '1px solid #2e2e2e' },
+                  backgroundColor: 'var(--tooltip-bg, #ffffff)',
+                  border: '1px solid var(--tooltip-border, #e9e9e7)',
                   borderRadius: '8px',
                   padding: '8px',
-                  color: '#37352f',
-                  dark: { color: '#e9e9e7' },
+                  color: 'var(--tooltip-color, #37352f)',
                 }}
               />
-              <Bar dataKey="hours" fill="#37352f" dark:fill="#e9e9e7" radius={[8, 8, 0, 0]} />
+              <Bar dataKey="hours" fill="#37352f" radius={[8, 8, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -128,28 +125,24 @@ export default function AnalyticsDashboard({ analytics }: AnalyticsDashboardProp
           </h3>
           <ResponsiveContainer width="100%" height={200}>
             <LineChart data={analytics.hoursByMonth}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e9e9e7" dark:stroke="#2e2e2e" opacity={0.3} />
-              <XAxis dataKey="month" stroke="#787774" dark:stroke="#9b9a97" fontSize={12} />
-              <YAxis stroke="#787774" dark:stroke="#9b9a97" fontSize={12} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#e9e9e7" className="dark:stroke-[#2e2e2e]" opacity={0.3} />
+              <XAxis dataKey="month" stroke="#787774" className="dark:stroke-[#9b9a97]" fontSize={12} />
+              <YAxis stroke="#787774" className="dark:stroke-[#9b9a97]" fontSize={12} />
               <Tooltip 
                 contentStyle={{ 
-                  backgroundColor: '#ffffff',
-                  dark: { backgroundColor: '#1e1e1e' },
-                  border: '1px solid #e9e9e7',
-                  dark: { border: '1px solid #2e2e2e' },
+                  backgroundColor: 'var(--tooltip-bg, #ffffff)',
+                  border: '1px solid var(--tooltip-border, #e9e9e7)',
                   borderRadius: '8px',
                   padding: '8px',
-                  color: '#37352f',
-                  dark: { color: '#e9e9e7' },
+                  color: 'var(--tooltip-color, #37352f)',
                 }}
               />
               <Line 
                 type="monotone" 
                 dataKey="hours" 
                 stroke="#37352f" 
-                dark:stroke="#e9e9e7"
                 strokeWidth={3}
-                dot={{ fill: '#37352f', dark: { fill: '#e9e9e7' }, r: 4 }}
+                dot={{ fill: '#37352f', r: 4 }}
                 activeDot={{ r: 6 }}
               />
             </LineChart>
