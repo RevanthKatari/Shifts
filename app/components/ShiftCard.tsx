@@ -9,16 +9,36 @@ interface ShiftCardProps {
 }
 
 export default function ShiftCard({ shift, onEdit }: ShiftCardProps) {
-  const getShiftColor = (shiftType: string): string => {
+  const getShiftConfig = (shiftType: string) => {
     switch (shiftType) {
       case 'morning':
-        return 'border-l-yellow-400 bg-yellow-50 dark:bg-yellow-900/20';
+        return {
+          gradient: 'from-yellow-400 to-yellow-500',
+          border: 'border-yellow-400',
+          bg: 'bg-yellow-50 dark:bg-yellow-900/20',
+          icon: '🌅',
+        };
       case 'afternoon':
-        return 'border-l-orange-400 bg-orange-50 dark:bg-orange-900/20';
+        return {
+          gradient: 'from-orange-400 to-orange-500',
+          border: 'border-orange-400',
+          bg: 'bg-orange-50 dark:bg-orange-900/20',
+          icon: '☀️',
+        };
       case 'night':
-        return 'border-l-indigo-400 bg-indigo-50 dark:bg-indigo-900/20';
+        return {
+          gradient: 'from-indigo-500 to-indigo-600',
+          border: 'border-indigo-500',
+          bg: 'bg-indigo-50 dark:bg-indigo-900/20',
+          icon: '🌙',
+        };
       default:
-        return 'border-l-gray-400 bg-gray-50 dark:bg-gray-700';
+        return {
+          gradient: 'from-gray-400 to-gray-500',
+          border: 'border-gray-400',
+          bg: 'bg-gray-50 dark:bg-gray-700',
+          icon: '📅',
+        };
     }
   };
 
@@ -35,25 +55,52 @@ export default function ShiftCard({ shift, onEdit }: ShiftCardProps) {
     }
   };
 
+  const config = getShiftConfig(shift.shiftType);
+
   return (
     <div
-      className={`border-l-4 rounded-lg p-4 cursor-pointer hover:shadow-md transition-shadow ${getShiftColor(shift.shiftType)}`}
+      className={`
+        relative overflow-hidden rounded-xl border-l-4 ${config.border} ${config.bg}
+        cursor-pointer card-hover p-4 sm:p-5
+        group
+      `}
       onClick={() => onEdit(shift)}
     >
       <div className="flex items-center justify-between">
-        <div>
-          <div className="font-semibold text-gray-800 dark:text-white">
-            {format(new Date(shift.date), 'MMM d, yyyy')}
+        <div className="flex items-center gap-3 flex-1 min-w-0">
+          <div className={`
+            w-12 h-12 rounded-xl bg-gradient-to-br ${config.gradient}
+            flex items-center justify-center text-2xl shadow-lg
+            flex-shrink-0
+          `}>
+            {config.icon}
           </div>
-          <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-            {getShiftLabel(shift.shiftType)} • {shift.startTime} - {shift.endTime}
+          <div className="flex-1 min-w-0">
+            <div className="font-bold text-base sm:text-lg text-gray-800 dark:text-white truncate">
+              {format(new Date(shift.date), 'MMM d, yyyy')}
+            </div>
+            <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1 flex items-center gap-2">
+              <span className="font-semibold">{getShiftLabel(shift.shiftType)}</span>
+              <span>•</span>
+              <span>{shift.startTime} - {shift.endTime}</span>
+            </div>
           </div>
         </div>
-        <div className="text-lg font-bold text-gray-800 dark:text-white">
-          {shift.hours}h
+        <div className="ml-4 flex-shrink-0">
+          <div className={`
+            px-4 py-2 rounded-xl bg-gradient-to-br ${config.gradient}
+            text-white font-bold text-lg sm:text-xl shadow-lg
+          `}>
+            {shift.hours}h
+          </div>
         </div>
       </div>
+      
+      {/* Hover effect */}
+      <div className={`
+        absolute inset-0 bg-gradient-to-r ${config.gradient} opacity-0
+        group-hover:opacity-5 transition-opacity duration-300
+      `} />
     </div>
   );
 }
-
