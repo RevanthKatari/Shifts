@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { Analytics } from '@/types';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
 
@@ -8,6 +9,26 @@ interface AnalyticsDashboardProps {
 }
 
 export default function AnalyticsDashboard({ analytics }: AnalyticsDashboardProps) {
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    const checkDarkMode = () => {
+      setIsDark(document.documentElement.classList.contains('dark'));
+    };
+    checkDarkMode();
+    const observer = new MutationObserver(checkDarkMode);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    return () => observer.disconnect();
+  }, []);
+
+  const gridColor = isDark ? '#2e2e2e' : '#e9e9e7';
+  const axisColor = isDark ? '#9b9a97' : '#787774';
+  const barColor = isDark ? '#e9e9e7' : '#37352f';
+  const lineColor = isDark ? '#e9e9e7' : '#37352f';
+  const tooltipBg = isDark ? '#1e1e1e' : '#ffffff';
+  const tooltipBorder = isDark ? '#2e2e2e' : '#e9e9e7';
+  const tooltipColor = isDark ? '#e9e9e7' : '#37352f';
+
   return (
     <div className="space-y-4 sm:space-y-6">
       {/* Stats Cards */}
@@ -98,19 +119,19 @@ export default function AnalyticsDashboard({ analytics }: AnalyticsDashboardProp
           </h3>
           <ResponsiveContainer width="100%" height={200}>
             <BarChart data={analytics.hoursByWeek}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e9e9e7" className="dark:stroke-[#2e2e2e]" opacity={0.3} />
-              <XAxis dataKey="week" stroke="#787774" className="dark:stroke-[#9b9a97]" fontSize={12} />
-              <YAxis stroke="#787774" className="dark:stroke-[#9b9a97]" fontSize={12} />
+              <CartesianGrid strokeDasharray="3 3" stroke={gridColor} opacity={0.3} />
+              <XAxis dataKey="week" stroke={axisColor} fontSize={12} />
+              <YAxis stroke={axisColor} fontSize={12} />
               <Tooltip 
                 contentStyle={{ 
-                  backgroundColor: 'var(--tooltip-bg, #ffffff)',
-                  border: '1px solid var(--tooltip-border, #e9e9e7)',
+                  backgroundColor: tooltipBg,
+                  border: `1px solid ${tooltipBorder}`,
                   borderRadius: '8px',
                   padding: '8px',
-                  color: 'var(--tooltip-color, #37352f)',
+                  color: tooltipColor,
                 }}
               />
-              <Bar dataKey="hours" fill="#37352f" radius={[8, 8, 0, 0]} />
+              <Bar dataKey="hours" fill={barColor} radius={[8, 8, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -125,24 +146,24 @@ export default function AnalyticsDashboard({ analytics }: AnalyticsDashboardProp
           </h3>
           <ResponsiveContainer width="100%" height={200}>
             <LineChart data={analytics.hoursByMonth}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e9e9e7" className="dark:stroke-[#2e2e2e]" opacity={0.3} />
-              <XAxis dataKey="month" stroke="#787774" className="dark:stroke-[#9b9a97]" fontSize={12} />
-              <YAxis stroke="#787774" className="dark:stroke-[#9b9a97]" fontSize={12} />
+              <CartesianGrid strokeDasharray="3 3" stroke={gridColor} opacity={0.3} />
+              <XAxis dataKey="month" stroke={axisColor} fontSize={12} />
+              <YAxis stroke={axisColor} fontSize={12} />
               <Tooltip 
                 contentStyle={{ 
-                  backgroundColor: 'var(--tooltip-bg, #ffffff)',
-                  border: '1px solid var(--tooltip-border, #e9e9e7)',
+                  backgroundColor: tooltipBg,
+                  border: `1px solid ${tooltipBorder}`,
                   borderRadius: '8px',
                   padding: '8px',
-                  color: 'var(--tooltip-color, #37352f)',
+                  color: tooltipColor,
                 }}
               />
               <Line 
                 type="monotone" 
                 dataKey="hours" 
-                stroke="#37352f" 
+                stroke={lineColor} 
                 strokeWidth={3}
-                dot={{ fill: '#37352f', r: 4 }}
+                dot={{ fill: lineColor, r: 4 }}
                 activeDot={{ r: 6 }}
               />
             </LineChart>
