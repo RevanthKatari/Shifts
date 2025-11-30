@@ -9,16 +9,31 @@ export default function ThemeToggle() {
   useEffect(() => {
     setMounted(true);
     // Check initial theme
-    const theme = localStorage.getItem('theme');
-    const isDark = theme === 'dark' || 
-      (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    const checkTheme = () => {
+      const theme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const isDark = theme === 'dark' || (!theme && prefersDark);
+      
+      setDarkMode(isDark);
+      if (isDark) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    };
     
-    setDarkMode(isDark);
-    if (isDark) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
+    checkTheme();
+    
+    // Listen for system theme changes
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const handleChange = () => {
+      if (!localStorage.getItem('theme')) {
+        checkTheme();
+      }
+    };
+    mediaQuery.addEventListener('change', handleChange);
+    
+    return () => mediaQuery.removeEventListener('change', handleChange);
   }, []);
 
   const toggleTheme = () => {
@@ -32,19 +47,25 @@ export default function ThemeToggle() {
       document.documentElement.classList.remove('dark');
       localStorage.setItem('theme', 'light');
     }
+    
+    // Force a re-render by dispatching a custom event
+    window.dispatchEvent(new Event('theme-change'));
   };
 
   if (!mounted) {
     return (
-      <div className="notion-button p-2.5 rounded-lg w-10 h-10"></div>
+      <div className="notion-button p-2.5 rounded-lg w-10 h-10 flex items-center justify-center">
+        <div className="w-5 h-5 border-2 border-[#787774] dark:border-[#9b9a97] rounded-full"></div>
+      </div>
     );
   }
 
   return (
     <button
       onClick={toggleTheme}
-      className="notion-button p-2.5 rounded-lg flex items-center justify-center transition-all duration-150"
+      className="notion-button p-2.5 rounded-lg flex items-center justify-center transition-all duration-150 hover:scale-105 active:scale-95"
       aria-label="Toggle theme"
+      type="button"
     >
       {darkMode ? (
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
