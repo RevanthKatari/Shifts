@@ -34,6 +34,8 @@ git push -u origin main
 4. Add environment variables:
    - `NEXT_PUBLIC_SUPABASE_URL` = `https://awrufthqhdhpruzjigoj.supabase.co`
    - `NEXT_PUBLIC_SUPABASE_ANON_KEY` = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF3cnVmdGhxaGRocHJ1emppZ29qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ0NjE5ODAsImV4cCI6MjA4MDAzNzk4MH0.llGXRF96PA7d0egdgpOa9Rcoz04hsc61qlBJrpjTqW8`
+   - `USER_1_PASSCODE` = `2338` (keep this secret!)
+   - `USER_2_PASSCODE` = `2339` (keep this secret!)
 5. Click **Deploy**
 
 ### 4. Access Your App
@@ -53,7 +55,11 @@ npm install
 ```
 NEXT_PUBLIC_SUPABASE_URL=https://awrufthqhdhpruzjigoj.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF3cnVmdGhxaGRocHJ1emppZ29qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ0NjE5ODAsImV4cCI6MjA4MDAzNzk4MH0.llGXRF96PA7d0egdgpOa9Rcoz04hsc61qlBJrpjTqW8
+USER_1_PASSCODE=2338
+USER_2_PASSCODE=2339
 ```
+
+**Note**: The `.env.local` file is automatically ignored by git and will not be committed.
 
 3. Run development server:
 ```bash
