@@ -61,7 +61,7 @@ export default function PayCalculator({ shifts }: PayCalculatorProps) {
         <select
           value={period}
           onChange={(e) => setPeriod(e.target.value as 'all' | 'week' | 'month')}
-          className="notion-input px-4 py-2.5 rounded-lg font-semibold transition-all"
+          className="notion-input px-4 py-2.5 rounded-lg font-semibold transition-all text-[#37352f] dark:text-[#e9e9e7] [&>option]:bg-white [&>option]:dark:bg-[#1e1e1e] [&>option]:text-[#37352f] [&>option]:dark:text-[#e9e9e7]"
         >
           <option value="all">All Time</option>
           <option value="week">This Week</option>

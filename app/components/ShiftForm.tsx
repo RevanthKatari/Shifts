@@ -140,7 +140,7 @@ export default function ShiftForm({ shift, selectedDate, onSave, onCancel }: Shi
           value={date}
           onChange={(e) => setDate(e.target.value)}
           required
-          className="notion-input w-full px-4 py-3 rounded-lg focus:ring-2 focus:ring-[#37352f] dark:focus:ring-[#e9e9e7] focus:ring-offset-0 font-medium"
+          className="notion-input w-full px-4 py-3 rounded-lg focus:ring-2 focus:ring-[#37352f] dark:focus:ring-[#e9e9e7] focus:ring-offset-0 font-medium text-[#37352f] dark:text-[#e9e9e7]"
         />
       </div>
 

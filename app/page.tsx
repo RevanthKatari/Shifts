@@ -79,7 +79,7 @@ export default function LoginPage() {
                   type="password"
                   value={code}
                   onChange={(e) => setCode(e.target.value)}
-                  className="notion-input w-full px-4 py-3 rounded-lg focus:ring-2 focus:ring-[#37352f] dark:focus:ring-[#e9e9e7] focus:ring-offset-0 placeholder-[#9b9a97] dark:placeholder-[#787774] font-medium"
+                  className="notion-input w-full px-4 py-3 rounded-lg focus:ring-2 focus:ring-[#37352f] dark:focus:ring-[#e9e9e7] focus:ring-offset-0 placeholder:text-[#9b9a97] dark:placeholder:text-[#787774] font-medium text-[#37352f] dark:text-[#e9e9e7]"
                   placeholder="Enter your code"
                   autoFocus
                 />
