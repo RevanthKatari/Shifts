@@ -4,7 +4,7 @@ A modern web application for tracking work shifts with analytics and pay calcula
 
 ## Features
 
-- **Separate User Accounts**: Two users with secret codes (2338, 2339)
+- **Separate User Accounts**: Two users with secret codes 
 - **Shift Management**: Track three shift types (Morning, Afternoon, Night)
 - **Calendar View**: Interactive calendar with shift visualization
 - **Analytics Dashboard**: Track hours, shifts, and trends
